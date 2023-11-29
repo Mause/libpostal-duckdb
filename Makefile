@@ -47,11 +47,12 @@ LIBPOSTAL_CONFIGURE_FLAGS+= --disable-sse2
 # https://github.com/openvenues/libpostal
 # For MacOS: brew install curl autoconf automake libtool pkg-config
 libpostal-configure:
+	apt-get install curl autoconf automake libtool pkg-config
 	cd libpostal && \
 	./bootstrap.sh && \
 	./configure $(LIBPOSTAL_CONFIGURE_FLAGS) && \
 	make -j10 && \
-	sudo make install
+	make install
 
 #### Main build
 # For regular CLI build, we link the libpostal extension directly into the DuckDB executable
@@ -62,7 +63,7 @@ debug:
 	cmake $(GENERATOR) $(BUILD_FLAGS) $(CLIENT_FLAGS) -DCMAKE_BUILD_TYPE=Debug -S ./duckdb/ -B build/debug && \
 	cmake --build build/debug --config Debug --parallel 10
 
-release:
+release: libpostal-configure
 	mkdir -p build/release && \
 	cmake $(GENERATOR) $(BUILD_FLAGS)  $(CLIENT_FLAGS)  -DCMAKE_BUILD_TYPE=Release -S ./duckdb/ -B build/release && \
 	cmake --build build/release --config Release --parallel 10

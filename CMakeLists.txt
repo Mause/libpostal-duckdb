@@ -10,15 +10,6 @@ project(${TARGET_NAME})
 include_directories(src/include)
 # use `pkg-config --libs libpostal` to find the correct linker flags
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(LIBPOSTAL libpostal)
-if(NOT libpostal_FOUND)
-  message("libpostal not found")
-  execute_process(COMMAND sh bootstrap.sh WORKING_DIRECTORY libpostal)
-  execute_process(COMMAND sh configure WORKING_DIRECTORY libpostal)
-  execute_process(COMMAND make -j10 WORKING_DIRECTORY libpostal)
-  execute_process(COMMAND make install WORKING_DIRECTORY libpostal)
-endif()
-# retry now it's installed
 pkg_check_modules(LIBPOSTAL REQUIRED libpostal)
 
 include_directories(${LIBPOSTAL_INCLUDE_DIRS})
