@@ -10,11 +10,15 @@ project(${TARGET_NAME})
 include_directories(src/include)
 # use `pkg-config --libs libpostal` to find the correct linker flags
 find_package(PkgConfig REQUIRED)
-pkg_check_modules(LIBPOSTAL REQUIRED libpostal)
+pkg_check_modules(LIBPOSTAL libpostal)
 if(NOT libpostal_FOUND)
   message("libpostal not found")
   exec_process(COMMAND make libpostal-configure)
+
+  # retry now it's installed
 endif()
+pkg_check_modules(LIBPOSTAL REQUIRED libpostal)
+
 include_directories(${LIBPOSTAL_INCLUDE_DIRS})
 
 set(EXTENSION_SOURCES src/libpostal_extension.cpp)
