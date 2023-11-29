@@ -46,8 +46,16 @@ LIBPOSTAL_CONFIGURE_FLAGS+= --disable-sse2
 # As of 2023-11-28, first need to install build deps as described at
 # https://github.com/openvenues/libpostal
 # For MacOS: brew install curl autoconf automake libtool pkg-config
+libpost-dependencies:
+	if [ -f /etc/debian_version ]; then \
+		apt-get install curl autoconf automake libtool pkg-config; \
+	elif [ -f /etc/redhat-release ]; then \
+		yum install curl autoconf automake libtool pkg-config; \
+	else \
+		brew install curl autoconf automake libtool pkg-config; \
+	fi
+
 libpostal-configure:
-	apt-get install curl autoconf automake libtool pkg-config
 	cd libpostal && \
 	./bootstrap.sh && \
 	./configure $(LIBPOSTAL_CONFIGURE_FLAGS) && \
