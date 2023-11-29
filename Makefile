@@ -55,7 +55,7 @@ libpost-dependencies:
 		brew install curl autoconf automake libtool pkg-config; \
 	fi
 
-libpostal-configure:
+libpostal-configure: libpost-dependencies
 	cd libpostal && \
 	./bootstrap.sh && \
 	./configure $(LIBPOSTAL_CONFIGURE_FLAGS) && \
