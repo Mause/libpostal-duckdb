@@ -13,7 +13,7 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBPOSTAL REQUIRED libpostal)
 if(NOT libpostal_FOUND)
   message("libpostal not found")
-  exec_command("make libpostal-configure")
+  exec_process(COMMAND make libpostal-configure)
 endif()
 include_directories(${LIBPOSTAL_INCLUDE_DIRS})
 
