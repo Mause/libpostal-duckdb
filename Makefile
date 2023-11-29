@@ -50,7 +50,7 @@ libpost-dependencies:
 	if [ -f /etc/debian_version ]; then \
 		apt-get install curl autoconf automake libtool pkg-config; \
 	elif [ -f /etc/redhat-release ]; then \
-		yum install curl autoconf automake libtool pkg-config; \
+		yum install curl autoconf automake libtool pkgconfig; \
 	else \
 		brew install curl autoconf automake libtool pkg-config; \
 	fi
